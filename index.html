@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canal de Denúncias</title>
+  
+  <link rel="icon" type="image/png" href="logo jmc .png">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #F2F2F2;
+      color: #1E2D3D;
+      line-height: 1.6;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, #4f4f53, #173b61);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header img {
+      height: 50px;
+      cursor: pointer;
+      flex-shrink: 0;
+      animation: logoBounce 1.5s ease forwards;
+    }
+    @keyframes logoBounce {
+      0% { transform: translateY(-20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    header div {
+      display: flex;
+      flex-direction: column;
+    }
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    header p {
+      font-size: 0.9rem;
+      color: #cfcfcf;
+      margin-top: 2px;
+    }
+
+    .hero {
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 100%;
+    }
+    .hero h2 {
+      color: #1E2D3D;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeInUp 1.3s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    .section {
+      padding: 3rem 2rem;
+      background-color: white;
+      margin: 2rem 0;
+      border-radius: 0;
+      width: 100vw;
+      box-shadow: none;
+    }
+    .section h3 {
+      color: #D93030;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+      from { opacity: 0; }
+    }
+    .steps, .guarantees {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+    .card {
+      background-color: #F2F2F2;
+      padding: 1.5rem;
+      border-radius: 12px;
+      flex: 1 1 280px;
+      min-width: 250px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: floatUp 1s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      cursor: default;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    .card strong {
+      color: #D93030;
+      font-size: 1.3rem;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .card::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #D93030;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      width: 220px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      white-space: normal;
+      text-align: center;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: #D93030 transparent transparent transparent;
+      transform: translateX(-50%) rotate(180deg);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .card:hover::after,
+    .card:hover::before {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .material-icons {
+      font-size: 32px;
+      color: #D93030;
+      flex-shrink: 0;
+      user-select: none;
+      animation: iconPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); color: #D93030; }
+      50% { transform: scale(1.2); color: #B22222; }
+    }
+
+    @keyframes floatUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .form-card {
+      background-color: #F2F2F2;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-card input,
+    .form-card select,
+    .form-card textarea {
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .form-card select {
+      cursor: pointer;
+      appearance: none;
+      padding-right: 1.5rem;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+      background-size: 1rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #1E2D3D;
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    form textarea {
+      resize: vertical;
+      height: 140px;
+    }
+    form button {
+      padding: 1rem;
+      background-color: #D93030;
+      color: white;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+      max-width: 250px;
+      align-self: center;
+    }
+    form button:hover {
+      background-color: #b71c1c;
+    }
+
+    footer {
+      background-color: #1E2D3D;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 2rem;
+      width: 100vw;
+    }
+    footer a {
+      color: #D93030;
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: color 0.3s ease;
+    }
+    footer a:hover {
+      color: #b71c1c;
+    }
+
+    #confirmation-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(30, 45, 61, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        animation: fadeIn 0.3s ease;
+    }
+    .confirmation-card {
+        background-color: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        text-align: center;
+        max-width: 90%;
+        width: 450px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        animation: floatUp 0.4s ease forwards;
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    .confirmation-card .material-icons {
+        font-size: 4rem;
+        color: #4CAF50;
+        animation: none;
+    }
+    .confirmation-card h2 {
+        color: #1E2D3D;
+        font-family: 'Montserrat', sans-serif;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .confirmation-card p {
+        color: #4f4f53;
+        line-height: 1.5;
+        margin-bottom: 2rem;
+    }
+    .confirmation-card button {
+        padding: 0.8rem 1.5rem;
+        background-color: #D93030;
+        color: white;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .confirmation-card button:hover {
+        background-color: #b71c1c;
+    }
+    
+    @media (max-width: 600px) {
+      header { padding: 1rem; }
+      .hero h2 { font-size: 1.6rem; }
+      .section h3 { font-size: 1.4rem; }
+      .steps, .guarantees { flex-direction: column; gap: 1rem; }
+      .card { min-width: auto; justify-content: flex-start; }
+      form { padding: 0 0.5rem; }
+      form button { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="Logo_Logo-Horizontal.png" alt="Logo Canal Ético" />
+    <div>
+      <h1>Canal de Denúncias</h1>
+      <p>Você tem voz. Nós estamos aqui para ouvir.</p>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2>Espaço seguro e confidencial para colaboradores</h2>
+    <p>Este canal é exclusivo para denúncias internas. Sua identidade será preservada por padrão.</p>
+  </section>
+
+  <section class="section">
+    <h3>Como funciona</h3>
+    <div class="steps">
+      <div class="card" data-tooltip="Preencha o formulário com os detalhes da denúncia para iniciar o processo de investigação.">
+        <span class="material-icons" aria-hidden="true">edit_note</span>
+        <strong>1.</strong> Faça sua denúncia pelo formulário abaixo
+      </div>
+      <div class="card" data-tooltip="A administração revisará cuidadosamente as informações recebidas para garantir justiça e confidencialidade.">
+        <span class="material-icons" aria-hidden="true">gavel</span>
+        <strong>2.</strong> Administração analisa o caso
+      </div>
+      <div class="card" data-tooltip="Consulte nosso mural de comunicados todo mês para acompanhar as resoluções dos casos, que são sempre publicadas sem identificação.">
+        <span class="material-icons" aria-hidden="true">feed</span>
+        <strong>3.</strong> Retorno anônimo divulgado no mural
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Garantias</h3>
+    <div class="guarantees">
+      <div class="card" data-tooltip="Sua denúncia será mantida em total sigilo, garantindo que sua identidade não será divulgada.">
+        <span class="material-icons" aria-hidden="true">lock</span>
+        Confidencialidade total
+      </div>
+      <div class="card" data-tooltip="Protegemos você contra qualquer tipo de retaliação ou represália por ter utilizado o canal de denúncias.">
+        <span class="material-icons" aria-hidden="true">security</span>
+        Proteção contra retaliações
+      </div>
+      <div class="card" data-tooltip="Todas as denúncias são tratadas em conformidade com o Código de Ética da organização.">
+        <span class="material-icons" aria-hidden="true">description</span>
+        Alinhado ao Código de Ética
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Formulário de Denúncia</h3>
+    
+    <!-- ATENÇÃO: ACTION DO FORMULÁRIO ALTERADO para usar o serviço FormSubmit -->
+    <form id="denuncia-form" action="https://formsubmit.co/contato@jmcparking.com.br" method="POST">
+      <!-- Campo para o assunto do email -->
+      <input type="hidden" name="_subject" value="Nova Denúncia Recebida - Canal de Denúncias">
+      <!-- Desativa o reCAPTCHA do FormSubmit (se preferir, remova esta linha para ativá-lo) -->
+      <input type="hidden" name="_captcha" value="false">
+
+      <div class="form-card">
+        <label for="data" class="form-label">Data do ocorrido</label>
+        <input id="data" name="data_do_ocorrido" type="date" aria-label="Data do ocorrido" />
+      </div>
+
+      <div class="form-card">
+        <label for="tema" class="form-label">Tema da denúncia</label>
+        <select id="tema" name="tema_da_denuncia" required aria-label="Tema da denúncia">
+          <option value="" disabled selected>Selecione um tema</option>
+          <option value="Assédio Moral">Assédio Moral</option>
+          <option value="Assédio Sexual">Assédio Sexual</option>
+          <option value="Discriminação">Discriminação</option>
+          <option value="Corrupção">Corrupção</option>
+          <option value="Fraude">Fraude</option>
+          <option value="Roubo">Roubo</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+
+      <div class="form-card">
+        <label for="descricao" class="form-label">Descrição detalhada</label>
+        <textarea id="descricao" name="descricao_da_denuncia" placeholder="Descreva a denúncia com o máximo de detalhes possível..." aria-label="Descrição da denúncia" required></textarea>
+      </div>
+
+      <button id="submit-btn" type="submit">Enviar denúncia</button>
+    </form>
+  </section>
+  
+  <footer>
+    <p>© 2025 Canal Ético - Todos os direitos reservados.</p>
+    <p>
+      <a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a>
+    </p>
+  </footer>
+
+  <div id="confirmation-overlay">
+    <div class="confirmation-card">
+      <span class="material-icons" aria-hidden="true">check_circle</span>
+      <!-- MENSAGEM DE CONFIRMAÇÃO ATUALIZADA -->
+      <h2>Denúncia Enviada!</h2>
+      <p>Sua denúncia foi enviada com sucesso e de forma anônima. Agradecemos sua contribuição para um ambiente mais ético e seguro.</p>
+      <button id="close-confirmation-btn">Fechar</button>
+    </div>
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('denuncia-form');
+      const overlay = document.getElementById('confirmation-overlay');
+      const closeBtn = document.getElementById('close-confirmation-btn');
+      const submitBtn = document.getElementById('submit-btn');
+
+      form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Impede o envio padrão do formulário imediatamente
+          
+          // Mostra o card de confirmação
+          overlay.style.display = 'flex';
+
+          // Envia os dados do formulário em segundo plano
+          const formData = new FormData(form);
+          fetch(form.action, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                  'Accept': 'application/json'
+              }
+          }).then(response => {
+              console.log('Formulário enviado com sucesso para o FormSubmit.');
+              form.reset(); // Limpa o formulário após o envio
+          }).catch(error => {
+              console.error('Erro ao enviar o formulário:', error);
+          });
+      });
+
+      const closeOverlay = () => {
+        overlay.style.display = 'none';
+      };
+
+      closeBtn.addEventListener('click', closeOverlay);
+
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) {
+          closeOverlay();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
